@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+
+class AdminPage extends StatefulWidget {
+  const AdminPage({super.key});
+
+  @override
+  State<AdminPage> createState() => _AdminPageState();
+}
+
+class _AdminPageState extends State<AdminPage> {
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70), 
+        child: AppBar(
+          title: const Text( "Admin Dashboard",
+          style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Colors.white
+        ),
+        ),
+        
+        backgroundColor: Colors.blue,
+        centerTitle: true,
+
+        
+        ),
+        ),
+    );
+  }
+}
