@@ -33,22 +33,24 @@ class FirestoreService {
     });
   }
 
-   // DELETE: Supprimer un malvoyant
-  Future<void> deleteMalvoyant(String malvoyantId) async {
+  //DELETE: supprimer un malvoyant 
+   Future<void> deleteMalvoyant(String malvoyantId) async {
     await malvoyants.doc(malvoyantId).delete();
   }
 
-  //CREATE: add a new person
-  Future<void> addPerson(String firstname, String lastname, String image, String relationship){
-    return persons.add({
-    'firstname': firstname,
-    'lastname': lastname,
-    'image': image,
-    'relationship': relationship,
-    'timestamp': Timestamp.now(),
+  
+  // Méthode pour ajouter une personne à un malvoyant spécifique
+  Future<void> addPersonToMalvoyant( String firstname, String lastname, String image, String relationship,String malvoyantId) async {
+    // Ajouter la personne avec un champ 'malvoyantId' indiquant le malvoyant auquel elle est associée
+    await persons.add({
+      'firstname': firstname,
+      'lastname': lastname,
+      'image': image,
+      'relationship': relationship,
+      'malvoyantId': malvoyantId, // Champ indiquant le malvoyant associé
+      'timestamp': Timestamp.now(),
     });
   }
-
   
   
 

@@ -1,6 +1,8 @@
 
 import 'package:co_i_project/pages/auth_page.dart';
-import 'package:co_i_project/pages/home_page.dart';
+//import 'package:co_i_project/pages/home_page.dart';
+//import 'package:co_i_project/pages/malvoyant_details_page.dart';
+import 'package:co_i_project/pages/malvoyants_list.dart';
 //import 'package:co_i_project/pages/loginpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ class MainPage extends StatelessWidget {
       (stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot){
         if(snapshot.hasData){
-          return const HomePage();
+          return const MalvoyantsList();
         }else{
           return const AuthPage();
         }

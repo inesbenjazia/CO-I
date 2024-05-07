@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:co_i_project/pages/add_malvoyant.dart';
+import 'package:co_i_project/pages/malvoyant_details_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +36,14 @@ class _MalvoyantsListState extends State<MalvoyantsList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Liste des malvoyants"),
+        actions: [
+           IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -65,6 +74,18 @@ class _MalvoyantsListState extends State<MalvoyantsList> {
                   // Actions à effectuer lors du tap sur un malvoyant
                   onTap: () {
                     // Implémentez ici l'action que vous souhaitez effectuer lors du tap
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                         MalvoyantDetailsPage(
+                          docID: document.id,
+                          firstName: firstname,
+                          lastName: lastname, 
+                          phoneNumber: phoneNumber,
+                          ),
+                      ),
+                    );
                   },
                 );
               },

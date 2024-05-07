@@ -5,20 +5,23 @@ import 'package:co_i_project/pages/add_person_page.dart';
 
 import 'package:co_i_project/pages/malvoyants_list.dart';
 import 'package:co_i_project/pages/person_details_page.dart';
-import 'package:co_i_project/services/firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class PersonsListPage extends StatefulWidget {
+  final String malvoyantId;
+   const PersonsListPage({super.key, required this.malvoyantId});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<PersonsListPage> createState() => _PersonsListPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  //firestore
-  final FirestoreService firestoreService = FirestoreService();
+class _PersonsListPageState extends State<PersonsListPage> {
+  
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+
+
   final user = FirebaseAuth.instance.currentUser!;
   //text controller
   final TextEditingController textControllerFirstname = TextEditingController();
@@ -55,16 +58,21 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Naviguer vers la page AddPersonPage lorsqu'on appuie sur le bouton "Add"
+          
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddPersonPage (),
-          ));
+            MaterialPageRoute(
+            builder: (context) => AddPersonPage(
+              malvoyantId: widget.malvoyantId,
+              ),
+          )
+          );
         },
 
         child: const Icon(Icons.add),
         ),
         body: StreamBuilder<QuerySnapshot>(
-          stream: firestoreService.getPersonsStream(),
+           stream: _firestore.collection('persons').where('malvoyantId', isEqualTo: widget.malvoyantId).snapshots(),
           builder: (context,snapshot){
            //if we have data, get all the docs
            if (snapshot.hasData) {

@@ -1,8 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:co_i_project/services/firestore.dart';
 
 class AddPersonPage extends StatefulWidget {
-  const AddPersonPage({super.key});
+  final String malvoyantId;
+  const AddPersonPage( {super.key,
+  required this.malvoyantId});
 
   @override
   State<AddPersonPage> createState() => _AddPersonPageState();
@@ -69,11 +72,14 @@ class _AddPersonPageState extends State<AddPersonPage> {
                 String relationship = _relationshipController.text;
 
                 // Call the function to add a new person
-                _firestoreService.addPerson(
+                _firestoreService.addPersonToMalvoyant(
+                  
                   firstName,
                   lastName,
                   imageUrl,
                   relationship,
+                  widget.malvoyantId,
+                  
                 );
 
                 // Clear the text fields

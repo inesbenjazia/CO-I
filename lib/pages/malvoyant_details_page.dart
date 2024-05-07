@@ -1,4 +1,6 @@
-import 'package:co_i_project/pages/edit_page.dart';
+import 'package:co_i_project/pages/edit_malvoyant_page.dart';
+import 'package:co_i_project/pages/persons_list_page.dart';
+//import 'package:co_i_project/pages/edit_page.dart';
 import 'package:co_i_project/services/firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -6,8 +8,7 @@ class MalvoyantDetailsPage extends StatelessWidget {
   final String docID;
   final String firstName;
   final String lastName;
-  final String condition;
-  final String imageUrl;
+  final String phoneNumber;
 
   final FirestoreService firestoreService = FirestoreService();
 
@@ -16,8 +17,7 @@ class MalvoyantDetailsPage extends StatelessWidget {
     required this.docID,
     required this.firstName,
     required this.lastName,
-    required this.condition,
-    required this.imageUrl,
+    required this.phoneNumber,
   });
 
   @override
@@ -37,16 +37,6 @@ class MalvoyantDetailsPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Positioned(
-            top: -20,
-            left: 0,
-            right: 0,
-            height: 250,
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 180),
             child: Center(
@@ -63,23 +53,16 @@ class MalvoyantDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    'Condition: $condition',
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
                   IconButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditPersonPage(
+                          builder: (context) => EditMalvoyantPage(
                             docID: docID,
                             firstName: firstName,
                             lastName: lastName,
-                            imageUrl: imageUrl,
-                            relationship: condition,
+                            phoneNumber: phoneNumber
                           ),
                         ),
                       );
@@ -89,12 +72,22 @@ class MalvoyantDetailsPage extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       // Supprimer le malvoyant
-                      firestoreService.deletePerson(docID);
+                      firestoreService.deleteMalvoyant(docID);
                       // Retourner à la page précédente
                       Navigator.pop(context);
                     },
                     icon: const Icon(Icons.delete),
                   ),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => PersonsListPage(malvoyantId: docID)),
+                      );
+                    }, 
+                    child: const Text('Voir les personnes associées'),
+                )
                 ],
               ),
             ),
