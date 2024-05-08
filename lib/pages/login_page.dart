@@ -1,129 +1,201 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatelessWidget {
-  final TextEditingController textControllerUsername = TextEditingController();
-  final TextEditingController textControllerPassword = TextEditingController();
+class LoginPage extends StatefulWidget {
+  final VoidCallback showRegisterPage;
+  const LoginPage({super.key,  required this.showRegisterPage});
 
-  LoginPage({super.key});
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  Future signIn() async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(), 
+      password: _passwordController.text.trim()
+    );
+  }
+
+  @override
+  void dispose(){
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('lib/images/clipfly-ai-20240417202439.jpg'),
-                fit: BoxFit.cover,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // Image de fond
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('lib/images/clipfly-ai-20240417202439.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            top: 100, // Adjust the distance from the top
-            bottom: 100, // Adjust the distance from the bottom
-            left: 20,
-            right: 20,
-            child: Center(
-              child: Container(
-                width: 400, // Adjust the width
-                height: 400, // Adjust the height
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                padding: const EdgeInsets.all(50),
-                child: Column(
-                  children: [
-                    const Text(
-                      'LOGIN',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+            // SingleChildScrollView avec le contenu interne
+            SingleChildScrollView(
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0 ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 100),
+                      Text(
+                        'HELLO AGAIN',
+                        style: GoogleFonts.bebasNeue(fontSize:52),
                       ),
-                    ),
-                    const SizedBox(height: 30),
-                    TextField(
-                      controller: textControllerUsername,
-                      decoration: const InputDecoration(
-                        hintText: 'Username',
-                        hintStyle: TextStyle(color: Color.fromARGB(255, 196, 196, 196)),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color.fromARGB(255, 180, 180, 180)),
-                        ),
-                        fillColor: Color.fromARGB(255, 240, 240, 240),
-                        filled: true,
-                        // hintText: hintText,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      controller: textControllerPassword,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Password',
-                        hintStyle: TextStyle(color: Color.fromARGB(255, 196, 196, 196)),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color.fromARGB(255, 180, 180, 180)),
-                        ),
-                        fillColor: Color.fromARGB(255, 240, 240, 240),
-                        filled: true,
-                        // hintText: hintText,
-                      ),
-                    ),
-                    // Add more text fields or login form elements here
-                    //const SizedBox(height: 5),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Forgot Password?',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Color.fromARGB(255, 70, 70, 70),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration:  BoxDecoration(
-                        color: const Color.fromARGB(255, 17, 0, 52),
-                        borderRadius: BorderRadius.circular(8)
-                        ),
-                      child: const Center(
-                        child: Text("Sign In",
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Welcome Back!',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 50),
+                      Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                          child: Column(
+                            children: [
+                              // Email text Field
+                              const SizedBox(height: 10),        
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: TextField(
+                                        controller: _emailController,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Email',
+                                          prefix: SizedBox(
+                                            width: 30,
+                                            child: Image.asset('lib/images/mail.png', width: 20, height: 20),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // Line 
+                                    Container(
+                                      height: 1,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // Password text Field
+                              const SizedBox(height: 10),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: TextField(
+                                        controller: _passwordController,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Password',
+                                          prefix: SizedBox(
+                                            width: 30,
+                                            child: Image.asset('lib/images/padlock.png', width: 20, height: 20),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 1,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // Bouton signIn
+                              const SizedBox(height: 10),
+                              GestureDetector(
+                                onTap: () => signIn(),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 112, 206, 227),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Center(
+                                      child: Text(
+                                        'Sign In',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 25),
+                              // Not a member text
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Not a member?',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  GestureDetector(
+                                    onTap: widget.showRegisterPage,
+                                    child: const Text(
+                                      ' Register Now',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 18, 159, 169),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                            ],
                           ),
                         ),
-                        )
-                     ),
-                    )
-
-                    
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-                
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
