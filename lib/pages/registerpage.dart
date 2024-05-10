@@ -86,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //const SizedBox(height: 100),
+                      const SizedBox(height: 10),
                       Text(
                         'HELLO THERE',
                         style: GoogleFonts.bebasNeue(fontSize:52),
@@ -100,10 +100,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
 
 
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 20),
 
                       Container(
-                        color: Colors.white,
+                        
+                        decoration: BoxDecoration( 
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30), 
+                          ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 25.0),
                           child: Column(

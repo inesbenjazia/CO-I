@@ -1,5 +1,5 @@
 import 'package:co_i_project/pages/edit_malvoyant_page.dart';
-import 'package:co_i_project/pages/persons_list_page.dart';
+import 'package:co_i_project/pages/personslistpage.dart';
 //import 'package:co_i_project/pages/edit_page.dart';
 import 'package:co_i_project/services/firestore.dart';
 import 'package:flutter/material.dart';

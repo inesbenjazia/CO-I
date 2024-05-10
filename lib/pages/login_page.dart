@@ -66,7 +66,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 50),
                       Container(
-                        color: Colors.white,
+                        decoration: BoxDecoration( 
+                          color: Colors.white,
+                           borderRadius: BorderRadius.circular(30),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 25.0),
                           child: Column(
@@ -185,6 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ],
                               ),
                               const SizedBox(height: 20),
+                              
                             ],
                           ),
                         ),
