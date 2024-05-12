@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:co_i_project/pages/add_malvoyant.dart';
-import 'package:co_i_project/pages/card.dart';
+
 import 'package:co_i_project/pages/malvoyant_details_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -44,26 +44,7 @@ class _MalvoyantsListState extends State<MalvoyantsList> {
             },
             icon: const Icon(Icons.logout),
           ),
-           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Scaffold(
-                    appBar: AppBar(
-                      title: const Text('Custom Card'),
-                    ),
-                    body: const CustomCard(
-                      title: 'Card Title',
-                      subtitle: 'Card Subtitle',
-                      imageUrl: 'https://th.bing.com/th/id/OIP.ct8vs1FZlkTDQ9PpX5LLMQHaFj?w=600&h=450&rs=1&pid=ImgDetMain',
-                    ),
-                  ),
-                ),
-              );
-            },
-            icon: const Icon(Icons.h_mobiledata),
-          ),
+
         ],
       ),
       floatingActionButton: FloatingActionButton(

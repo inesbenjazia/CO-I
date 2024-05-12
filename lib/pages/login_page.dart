@@ -67,8 +67,9 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 50),
                       Container(
                         decoration: BoxDecoration( 
-                          color: Colors.white,
-                           borderRadius: BorderRadius.circular(30),
+                          color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.7),
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -78,25 +79,31 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(height: 10),        
                               Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
+                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01),
+                                  //border: Border.all(color: Colors.white),
+                                  //borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                      child: TextField(
-                                        controller: _emailController,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Email',
-                                          prefix: SizedBox(
-                                            width: 30,
-                                            child: Image.asset('lib/images/mail.png', width: 20, height: 20),
-                                          ),
-                                        ),
+                                      child: Row(
+                                        children:[
+                                            SizedBox(
+                                              width: 30,
+                                              child: Image.asset('lib/images/mail.png', width: 20, height: 20),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Expanded(
+                                              child: TextField(
+                                                controller: _emailController,
+                                                decoration: const InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: 'Email',
+                                                ),
+                                              ) ,)
+                                        ]
                                       ),
                                     ),
                                     // Line 
@@ -112,26 +119,35 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(height: 10),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
+                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01), 
+                                  //border: Border.all(color: Colors.white),
+                                  //borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                      child: TextField(
-                                        controller: _passwordController,
-                                        obscureText: true,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Password',
-                                          prefix: SizedBox(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
                                             width: 30,
                                             child: Image.asset('lib/images/padlock.png', width: 20, height: 20),
                                           ),
-                                        ),
+                                          const SizedBox(width: 10,),
+                                          Expanded(child: TextField(
+                                            controller: _passwordController,
+                                                obscureText: true,
+                                                decoration: 
+                                                const InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: 'Password', 
+                                                  
+                                                ),
+                                          )
+                                           ,)
+                                        ],
+                                        
                                       ),
                                     ),
                                     Container(
@@ -143,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
 
                               // Bouton signIn
-                              const SizedBox(height: 10),
+                              const SizedBox(height:25),
                               GestureDetector(
                                 onTap: () => signIn(),
                                 child: Container(

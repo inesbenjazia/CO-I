@@ -95,4 +95,12 @@ class FirestoreService {
   Future<void> deletePerson(String docID){
     return persons.doc(docID).delete();
   }
+
+  // SEARCH: Search for persons based on specific criteria
+Future<List<DocumentSnapshot>> searchPersons(String searchTerm) async {
+  final QuerySnapshot querySnapshot = await persons.where('firstname', isEqualTo: searchTerm).get();
+
+  return querySnapshot.docs;
 }
+}
+

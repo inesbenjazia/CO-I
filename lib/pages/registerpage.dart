@@ -14,6 +14,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmpasswordController = TextEditingController();
@@ -22,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _phoneNumberController = TextEditingController();
 
   @override
-  void dispose() {
+  void dispose(){
     _emailController.dispose();
     _passwordController.dispose();
     _confirmpasswordController.dispose();
@@ -31,39 +32,46 @@ class _RegisterPageState extends State<RegisterPage> {
     _phoneNumberController.dispose();
     super.dispose();
   }
-
+  
   Future signUp() async {
-    if (passwordConfirmed()) {
+    if (passwordConfirmed()){
       //create user
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+      await FirebaseAuth.instance.createUserWithEmailAndPassword
+    (
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim()
+    );
+    
 
-      //add user details
-      addUserDetails(
-        _firstNameController.text.trim(),
-        _lastNameController.text.trim(),
-        _emailController.text.trim(),
-        int.parse(_phoneNumberController.text.trim()),
+    //add user details 
+    addUserDetails(
+      _firstNameController.text.trim(),
+      _lastNameController.text.trim(),
+      _emailController.text.trim(),
+      int.parse(_phoneNumberController.text.trim())
       );
     }
   }
 
-  Future addUserDetails(String firstName, String lastName, String email, int phoneNumber) async {
+  Future addUserDetails(String firstName, String lastName, String email , int phoneNumber) async {
     await FirebaseFirestore.instance.collection('users').add({
       'first name': firstName,
-      'last name': lastName,
-      'phone number': phoneNumber,
-      'email': email,
-    });
+      'last name' :lastName ,
+      'phone number':phoneNumber ,
+      'email':email ,}
+    );
   }
+    
 
   bool passwordConfirmed() {
-    return _passwordController.text.trim() == _confirmpasswordController.text.trim();
+    if (_passwordController.text.trim() == _confirmpasswordController.text.trim()){
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -82,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SingleChildScrollView(
               child: Center(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0 ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0 ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -90,12 +98,17 @@ class _RegisterPageState extends State<RegisterPage> {
                       Text(
                         'HELLO THERE',
                         style: GoogleFonts.bebasNeue(fontSize:52),
-                      ),
+                    ),
+                        
+                      
                       const SizedBox(height: 10),
-                      const Text(
-                        'Register below with your details!',
-                        style: TextStyle(
-                          fontSize: 20,
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Register below with your details!',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
                       ),
 
@@ -104,9 +117,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
                       Container(
                         
-                        decoration: BoxDecoration( 
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30), 
+                        decoration:
+                          BoxDecoration(
+                            color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.7),
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -116,10 +131,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               const SizedBox(height: 10),        
                               Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                              color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01),                              
+                            ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
@@ -146,10 +159,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               const SizedBox(height: 10),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                              color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01),                              
+                            ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
@@ -176,10 +187,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               const SizedBox(height: 10),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                              color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01),                              
+                            ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
@@ -206,10 +215,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               const SizedBox(height: 10),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                              color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01),                              
+                            ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
@@ -236,10 +243,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               const SizedBox(height: 10),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                              color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01),                              
+                            ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
@@ -265,11 +270,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               // lconfirm passsworf  text Field
                               const SizedBox(height: 10),
                               Container(
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.5),
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                                decoration:BoxDecoration(
+                              color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01),                              
+                            ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
@@ -338,11 +341,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 15),
                             ],
                           ),
                         ),
+                         
                       ),
+                      const SizedBox(height: 30),
                     ],
                   ),
                 ),
