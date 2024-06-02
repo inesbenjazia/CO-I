@@ -2,7 +2,6 @@ import 'package:co_i_project/pages/blue_header.dart';
 import 'package:co_i_project/pages/edit_malvoyant_page.dart';
 import 'package:co_i_project/pages/personlistpagewithpadding.dart';
 import 'package:co_i_project/services/firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MalvoyantDetailsPage extends StatelessWidget {
@@ -10,6 +9,7 @@ class MalvoyantDetailsPage extends StatelessWidget {
   final String firstName;
   final String lastName;
   final String phoneNumber;
+  
 
   final FirestoreService firestoreService = FirestoreService();
 
@@ -30,7 +30,7 @@ class MalvoyantDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             BlueHeader(
-              userEmail: FirebaseAuth.instance.currentUser!.email!,
+              
             ),
             const SizedBox(height: 20), // Added space
             Padding(
@@ -152,7 +152,7 @@ class MalvoyantDetailsPage extends StatelessWidget {
                                   );
                                 },
                                 icon: Image.asset(
-                                  'lib/images/pen.png', // Remplacer 'your_image.png' par le nom de votre image
+                                  'lib/images/ediit.png', // Remplacer 'your_image.png' par le nom de votre image
                                   height: 40, // Ajouter la hauteur souhaitée
                                   width: 40, // Ajouter la largeur souhaitée
                                 ),

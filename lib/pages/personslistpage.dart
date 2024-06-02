@@ -17,7 +17,7 @@ class PersonsListPage extends StatefulWidget {
 
 class _PersonsListPageState extends State<PersonsListPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser!.email;
   final TextEditingController _searchController = TextEditingController();
   late List<DocumentSnapshot> searchResults = [];
   final FirestoreService _firestoreService = FirestoreService();
@@ -30,104 +30,170 @@ class _PersonsListPageState extends State<PersonsListPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Blue header with search box
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 200, // Header height
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color.fromRGBO(21, 137, 179, 1), // Dark color at the top
-                  Color.fromRGBO(136, 222, 254, 1), // Light color at the bottom
-                ],
-              ),
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(30),
-                bottomLeft: Radius.circular(30),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                const Text(
-                  'Welcome',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${user.email}',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
-                            ),
+        Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 170, // Hauteur de l'en-tête
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromRGBO(21, 137, 179, 1), // Couleur foncée en haut
+                       Color.fromRGBO(136, 222, 254, 1), // Couleur claire en bas
+                      ],
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomRight:Radius.circular(30),
+                      bottomLeft:Radius.circular(30),
+                    ),
+                   ),
+
+                  
+                    
+                        child: Stack(
+                          children:[ 
+                            Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(top: 28.0),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'Welcome',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              
+                                
+                              Padding(
+                                padding: const EdgeInsets.only(left: 2.5),
+                                child: StreamBuilder<QuerySnapshot>(
+                                  stream: _firestore.collection('users').where('email', isEqualTo: user).snapshots(),
+                                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('Erreur: ${snapshot.error}');
+                                    }
+                              
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return const Text('Chargement...');
+                                    }
+                              
+                                    if (snapshot.data!.docs.isEmpty) {
+                                      return const Text('Aucun utilisateur trouvé.');
+                                    }
+                              
+                                    // Si l'utilisateur est trouvé, accédez à ses données
+                                    String firstName = snapshot.data!.docs[0]['first name'];
+                                    String lastName = snapshot.data!.docs[0]['last name'];
+                              
+                                    return Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                         '$firstName $lastName',
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                               const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ),
+                                      child: TextField(
+                                        controller: _searchController,
+                                        decoration: InputDecoration(
+                                          hintText: 'Search',
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular((8.0)),
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.search_rounded,
+                                        color: Color.fromRGBO(21, 137, 179, 1),
+                                      ),
+                                      onPressed: () async {
+                                        String searchTerm = _searchController.text.trim();
+                                        if (searchTerm.isNotEmpty) {
+                                          searchResults = await _firestoreService.searchPersons(searchTerm); // Call searchPersons from FirestoreService
+                                        } else {
+                                          searchResults = [];
+                                        }
+                                        setState(() {});
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+
+                               
+                            ],
+                            
+                            
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 27.0),
+                            child: Align(
+                                
+                                alignment: Alignment.topRight,
+                                child: IconButton(
+                                  onPressed: () {
+                                  },
+                                  color: Colors.white,
+                                  iconSize: 34,
+                                  icon: const Icon(Icons.account_circle), // Utilisation de l'icône de compte utilisateur
+                                ),
+                              ),
+                          ),
+                          
+                          
                           ],
                         ),
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            hintText: 'Search',
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular((8.0)),
-                      ),
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.search_rounded,
-                          color: Color.fromRGBO(21, 137, 179, 1),
-                        ),
-                        onPressed: () async {
-                          String searchTerm = _searchController.text.trim();
-                          if (searchTerm.isNotEmpty) {
-                            searchResults = await _firestoreService.searchPersons(searchTerm); // Call searchPersons from FirestoreService
-                          } else {
-                            searchResults = [];
-                          }
-                          setState(() {});
-                        },
-                      ),
-                    )
-                  ],
+                        
+                          
+                        
+                     
+                    
+                  
                 ),
-              ],
-            ),
-          ),
           const SizedBox(height: 20), // Added space
           Expanded(
             child: Column(

@@ -14,6 +14,7 @@ class FirestoreService {
       'first name': firstName,
       'last name': lastName,
       'phone number': phoneNumber,
+      //'sexe' : sexe,
       'userId': userId,
 
     });

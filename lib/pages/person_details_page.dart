@@ -1,3 +1,4 @@
+import 'package:co_i_project/pages/blue_header.dart';
 import 'package:co_i_project/pages/edit_page.dart';
 import 'package:co_i_project/services/firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,66 +40,9 @@ return Scaffold(
           // En-tête personnalisé et image de profil
            
              Stack(
-              children: [
+              children: <Widget> [
                 // En-tête personnalisé
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 170, // Hauteur de l'en-tête
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromRGBO(21, 137, 179, 1), // Couleur foncée en haut
-                       Color.fromRGBO(136, 222, 254, 1), // Couleur claire en bas
-                      ],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomRight:Radius.circular(30),
-                      bottomLeft:Radius.circular(30),
-                    ),
-                   ),
-
-                  
-                    child:  Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 20.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Welcome',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w300,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        
-                          
-                           Align(
-                            
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                  
-                              '$user',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
-                              ),
-                             
-                            ),
-                          
-                          ),
-                      ],
-                    ),
-                    
-                  
-                ),
+                BlueHeader(),
                 // Image de profil
                 Padding(
                   padding: const EdgeInsets.only(top: 80, bottom: 20),

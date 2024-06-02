@@ -21,6 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _phoneNumberController = TextEditingController();
+  final _sexeController = TextEditingController();
 
   @override
   void dispose(){
@@ -30,6 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _phoneNumberController.dispose();
+    _sexeController.dispose();
     super.dispose();
   }
   
@@ -48,17 +50,19 @@ class _RegisterPageState extends State<RegisterPage> {
       _firstNameController.text.trim(),
       _lastNameController.text.trim(),
       _emailController.text.trim(),
-      int.parse(_phoneNumberController.text.trim())
+      _sexeController.text.trim(),
+      int.parse(_phoneNumberController.text.trim()),
       );
     }
   }
 
-  Future addUserDetails(String firstName, String lastName, String email , int phoneNumber) async {
+  Future addUserDetails(String firstName, String lastName, String email ,String sexe , int phoneNumber) async {
     await FirebaseFirestore.instance.collection('users').add({
       'first name': firstName,
       'last name' :lastName ,
       'phone number':phoneNumber ,
-      'email':email ,}
+      'email':email ,
+      'sexe': sexe,}
     );
   }
     
@@ -200,6 +204,32 @@ class _RegisterPageState extends State<RegisterPage> {
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'Phone Number',
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 1,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 255, 253, 253).withOpacity(0.01),                              
+                            ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: TextField(
+                                        controller: _sexeController,
+                                        
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Sexe',
                                         ),
                                       ),
                                     ),

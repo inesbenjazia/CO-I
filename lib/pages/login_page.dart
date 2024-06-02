@@ -1,3 +1,4 @@
+import 'package:co_i_project/pages/forgot_password_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -182,7 +183,32 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 25),
+                              const SizedBox(height: 3),
+                              Padding(
+                                    padding: const EdgeInsets.only(top: 5 , left: 180),
+                                    
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)
+                                          {
+                                            return const ForgotPasswordPage() ;
+                                    
+                                          }));
+                                      },
+                                      child:
+                                        
+                                        const Text(
+                                          
+                                          'Forgot Password?',
+                                           style: TextStyle(
+                                              color: Color.fromARGB(255, 18, 159, 169),
+                                              
+                                            ),
+                                        )
+                                    ),
+                                  ),
+                                  const SizedBox(height: 25),
                               // Not a member text
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
